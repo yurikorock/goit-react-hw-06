@@ -4,19 +4,23 @@ import { nanoid } from "nanoid";
 import { useId } from "react";
 import * as Yup from "yup";
 import css from "./ContactForm.module.css";
+import { useDispatch } from "react-redux";
+import { addContact } from "../../redux/contactsSlice";
 
-import InputMask from "react-input-mask";
+const ContactForm = () => {
+  const dispatch = useDispatch();
 
-const ContactForm = ({ onAdd }) => {
   const nameFieldId = useId();
   const numberFieldId = useId();
 
   const handleSubmit = (values, actions) => {
-    onAdd({
-      name: values.name,
-      number: values.number,
-      id: nanoid(),
-    });
+    dispatch(
+      addContact({
+        name: values.name,
+        number: values.number,
+        id: nanoid(),
+      })
+    );
 
     actions.resetForm();
   };
